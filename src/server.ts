@@ -1,39 +1,18 @@
 import "reflect-metadata";
+import path from "node:path";
 import { ApolloServer } from "@apollo/server";
 import { startStandaloneServer } from "@apollo/server/standalone";
-
-const typeDefs = `#graphql
-  type Book {
-    title: String
-    author: String
-  }
-
-  type Query {
-    books: [Book]
-  }
-`;
-
-const books = [
-  {
-    title: "The Awakening",
-    author: "Kate Chopin",
-  },
-  {
-    title: "City of Glass",
-    author: "Paul Auster",
-  },
-];
-
-const resolvers = {
-  Query: {
-    books: () => books,
-  },
-};
+import { buildSchema } from "type-graphql";
+import { AppointmentsResolver } from "./resolvers/appointments-resolver";
 
 async function main() {
+  const schema = await buildSchema({
+    resolvers: [AppointmentsResolver],
+    emitSchemaFile: path.resolve(__dirname, "schema.gql"),
+  });
+
   const server = new ApolloServer({
-    typeDefs,
-    resolvers,
+    schema,
   });
 
   const { url } = await startStandaloneServer(server, {
