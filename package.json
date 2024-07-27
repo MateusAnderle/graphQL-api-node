@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "tsnd src/server.ts --transpile-only"
   },
   "keywords": [],
   "author": "",
@@ -13,6 +13,7 @@
     "ts-node-dev": "^2.0.0"
   },
   "dependencies": {
+    "@apollo/server": "^4.10.5",
     "graphql": "^16.9.0",
     "graphql-scalars": "^1.23.0",
     "reflect-metadata": "^0.2.2",
